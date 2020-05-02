@@ -23,7 +23,7 @@ public class BookDaotest {
 
     @Test
     public void testFindAll() {
-        List<Book> bookList = bookDao.findAll();
+        List<Book> bookList = bookDao.findAll(null, 1, 5);
         bookList.forEach(System.out::println);
     }
 

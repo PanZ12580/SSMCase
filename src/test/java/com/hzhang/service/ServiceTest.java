@@ -24,7 +24,7 @@ public class ServiceTest {
 
     @Test
     public void testFindAll() {
-        List<Book> bookList = bookService.findAll();
-        bookList.forEach(System.out::println);
+/*        List<Book> bookList = bookService.findAll();
+        bookList.forEach(System.out::println);*/
     }
 }
