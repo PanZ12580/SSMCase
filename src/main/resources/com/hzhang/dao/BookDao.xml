@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzhang.dao.BookDao">
+<!--    查询全部-->
+    <select id="findAll" resultType="Book">
+        select * from books
+        <where>
+            <if test="query != null">
+                and bookName like concat('%', #{query}, '%')
+                or detail like concat('%', #{query}, '%')
+            </if>
+        </where>
+        limit #{start}, #{offset}
+    </select>
+<!--    根据id查询-->
+    <select id="findById" parameterType="Integer" resultType="Book">
+        select * from books
+        where bookId = #{bookId}
+    </select>
+<!--    保存书-->
+    <insert id="saveBook" parameterType="Book" useGeneratedKeys="true" keyProperty="bookId">
+        insert into books(bookName, bookImg, bookCount, detail)
+        values(#{bookName}, #{bookImg}, #{bookCount}, #{detail})
+    </insert>
+<!--    根据id删除书-->
+    <delete id="deleteBook" parameterType="Integer">
+        delete from books
+        where bookId = ${bookId}
+    </delete>
+<!--    修改书-->
+    <update id="updateBook" parameterType="Book">
+        update books
+        <set>
+            <if test="bookName != null">
+                bookName = #{bookName},
+            </if>
+            <if test="bookImg != null">
+                bookImg = #{bookImg},
+            </if>
+            <if test="bookCount != null">
+                bookCount = #{bookCount},
+            </if>
+            <if test="detail != null">
+                detail = #{detail}
+            </if>
+        </set>
+        where bookId = #{bookId}
+    </update>
+<!--    统计总共多少本书-->
+    <select id="count" parameterType="PageBean" resultType="Integer">
+        select count(*) from books
+        <where>
+            <if test="query != null">
+                and bookName like concat('%', #{query}, '%')
+                or detail like concat('%', #{query}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>
